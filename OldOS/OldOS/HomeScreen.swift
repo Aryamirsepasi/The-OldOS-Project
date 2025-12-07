@@ -324,15 +324,14 @@ struct home_bar: View {
                     Circle()
                         .stroke(Color.gray.opacity(0.35), lineWidth: 1)
                 )
-                Circle().fill(LinearGradient(gradient: Gradient(colors: [.black, .black, .black, Color.gray.opacity(0.35)]), startPoint: .top, endPoint: .bottom)).frame(width: 65, height:65)
+                Circle().fill(LinearGradient(gradient: Gradient(colors: [.black, .black, .black, Color.gray.opacity(0.35)]), startPoint: .top, endPoint: .bottom)).frame(width: 65, height:65).scaleEffect(isPressed ? 0.90 : 0.93)
+                    .shadow(color: isPressed ? Color.gray.opacity(0.2) : Color.gray.opacity(0.3), radius: 4, x: 0, y: 1).offset(y: isPressed ? 0.75 : 0)
+                    
                 RoundedRectangle(cornerRadius: 4).fill(Color.black).frame(width: 20, height:20).overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.gray.opacity(0.65), lineWidth: 1.75)
                 )
             }
-            .scaleEffect(isPressed ? 0.93 : 1.0)
-            .shadow(color: isPressed ? Color.gray.opacity(0.4) : Color.clear, radius: 4, x: 0, y: 1)
-            
             ForceTouchGestureView(onStateChange: { isPressedDown in
                 handlePress(isDown: isPressedDown)
             })
