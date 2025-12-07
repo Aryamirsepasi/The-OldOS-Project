@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 "Camera_Wallpaper_Home": false,
                 "bookmarks": ["https://apple.com":"Apple", "https://yahoo.com":"Yahoo!", "https://google.com":"Google", "https://manuals.info.apple.com/MANUALS/1000/MA1539/en_US/iPhone_iOS4_User_Guide.pdf":"iPhone User Guide", "https://web.archive.org/web/20100814131917/https://www.apple.com/webapps/":"iPhone Web Applications",  "https://bento.me/zzanehip":"Zane K — My place on the internet"],
                 "webpages": ["0":"https://google.com", "1":"https://bento.me/zzanehip"], //Saving like this let's us get around NSKeyedArchiver
-                "weather_cities": ["0":"Cupertino,us", "1": "New York,us"],
+                "weather_cities": ["0":"Cupertino, United States", "1": "New York, United States"],
                 "weather_mode": "imperial",
                 "stock_mode": "Price",
                 "stocks": ["AAPL", "GOOG", "NVDA", "TSLA", "T","MSFT", "AMZN", "NFLX", "META", "INTC", "ORCL"]

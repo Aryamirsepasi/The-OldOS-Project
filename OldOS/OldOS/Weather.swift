@@ -5,7 +5,6 @@
 //  Created by Zane Kleinberg on 4/9/21.
 //
 
-//TO RUN THIS YOURSELF MAKE SURE TO GRAB AN APP ID FROM OPENWEATHER AND INPUT IT
 
 import SwiftUI
 import SwiftUIPager
@@ -30,7 +29,6 @@ struct Weather: View, Equatable {
     @StateObject var page: Page = .first()
     @Binding var show_multitasking: Bool
     @ObservedObject var weather_data: ObservableArray<WeatherObserver> = try! ObservableArray(array: [WeatherObserver(location: "", mode: "imperial")]).observeChildrenChanges()
-    // @ObservedObject var weatherData = WeatherObserver()
     var items = Array(0..<3)
     
     init(show_multitasking: Binding<Bool>) {
@@ -62,37 +60,43 @@ struct Weather: View, Equatable {
                         if collapse_pager == true {
                             VStack(spacing: 0) {
                                 Spacer().frame(height:80)
-                                if (weather_data.array[optional: page.index]?.current_data?.weather?[0].icon ?? "").contains("n") {
-                                    weather_content_view_night_2(weatherData: weather_data.array[optional:page.index] ?? WeatherObserver(location: "", mode: "imperial"), show_settings: $show_settings, switch_to_settings: $switch_to_settings)
+                                let observer = weather_data.array[optional: page.index]
+
+                                if observer?.currentIconCode.contains("n") ?? false {
+                                    weather_content_view_night_2(
+                                        weatherData: observer ?? WeatherObserver(location: "", mode: "imperial"),
+                                        show_settings: $show_settings,
+                                        switch_to_settings: $switch_to_settings
+                                    )
                                 } else {
-                                    weather_content_view_day(weatherData: weather_data.array[optional:page.index] ?? WeatherObserver(location: "", mode: "imperial"), show_settings: $show_settings, switch_to_settings: $switch_to_settings, collapse_pager: $collapse_pager)
+                                    weather_content_view_day(
+                                        weatherData: observer ?? WeatherObserver(location: "", mode: "imperial"),
+                                        show_settings: $show_settings,
+                                        switch_to_settings: $switch_to_settings,
+                                        collapse_pager: $collapse_pager
+                                    )
                                 }
                             }.overlay(VStack(spacing: 0) {
-                                Spacer().frame(height:30 + json_iconography_to_offset(weather_data.array[optional: page.index]?.current_data?.weather?[0].icon ?? ""))
-                                Image(json_iconography_to_image(weather_data.array[optional: page.index]?.current_data?.weather?[0].icon ?? "", is_mini: false))
+                                let iconCode = weather_data.array[optional: page.index]?.currentIconCode ?? ""
+
+                                  Spacer().frame(height: 30 + json_iconography_to_offset(iconCode))
+
+                                  Image(
+                                      json_iconography_to_image(iconCode, is_mini: false)
+                                  )
+
                                 Spacer()
                             })
                         } else {
-                        Pager(page: page, data: weather_data.array, id: \.full_location, content: {index in
-                            //      if index == 0 {
-                            ZStack {
-                            VStack(spacing: 0) {
-                                Spacer().frame(height:80)
-                                if (index.current_data?.weather?[0].icon ?? "").contains("n") {
-                                    weather_content_view_night_2(weatherData: index, show_settings: $show_settings, switch_to_settings: $switch_to_settings)
-                                } else {
-                                    weather_content_view_day(weatherData: index, show_settings: $show_settings, switch_to_settings: $switch_to_settings, collapse_pager: $collapse_pager)
-                                }
-                            }
-                           VStack(spacing: 0) {
-                            if !(index.current_data?.weather?[0].icon?.isEmpty ?? false) {
-                                Spacer().frame(height:30 + json_iconography_to_offset(index.current_data?.weather?[0].icon ?? ""))
-                                    Image(json_iconography_to_image(weather_data.array[optional: page.index]?.current_data?.weather?[0].icon ?? "", is_mini: false)).animationsDisabled()
-                                }
-                                Spacer()
-                            }.animationsDisabled()
-                            }
-                        })
+                            Pager(page: page, data: weather_data.array, id: \.id) { observer in
+                            WeatherPageView(
+                                weatherData: observer,
+                                show_settings: $show_settings,
+                                switch_to_settings: $switch_to_settings,
+                                collapse_pager: $collapse_pager
+                            )
+                            
+                        }
                         }
                         Spacer().frame(height:25)
                         HStack(spacing: 10) {
@@ -106,8 +110,50 @@ struct Weather: View, Equatable {
                     }.frame(width:geometry.size.width, height:geometry.size.height).rotation3DEffect(.degrees(switch_to_settings == true ? -90 : 0), axis: (x: 0, y:1, z: 0), anchor: UnitPoint(1, 0.5)).offset(x:switch_to_settings == true ? -geometry.size.width/2 : 0).opacity(switch_to_settings == true ? 0 : 1).isHidden(hide_weather)
             }
         }.compositingGroup()
-        }.background(Color.black).onAppear() {
-            print(json_iconography_to_image(weather_data.array[optional: page.index]?.current_data?.weather?[0].icon ?? "", is_mini: false))
+        }.background(Color.black)
+    }
+}
+
+struct WeatherPageView: View {
+    @ObservedObject var weatherData: WeatherObserver
+    @Binding var show_settings: Bool
+    @Binding var switch_to_settings: Bool
+    @Binding var collapse_pager: Bool
+
+    var body: some View {
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer().frame(height: 80)
+                if weatherData.currentIconCode.contains("n") {
+                    weather_content_view_night_2(
+                        weatherData: weatherData,
+                        show_settings: $show_settings,
+                        switch_to_settings: $switch_to_settings
+                    )
+                } else {
+                    weather_content_view_day(
+                        weatherData: weatherData,
+                        show_settings: $show_settings,
+                        switch_to_settings: $switch_to_settings,
+                        collapse_pager: $collapse_pager
+                    )
+                }
+            }
+            VStack(spacing: 0) {
+                let iconCode = weatherData.currentIconCode
+
+                if !iconCode.isEmpty {
+                    Spacer().frame(height: 15 + json_iconography_to_offset(iconCode))
+
+                    Image(
+                        json_iconography_to_image(iconCode, is_mini: false)
+                    )
+                    .animationsDisabled()
+                }
+
+                Spacer()
+            }
+            .animationsDisabled()
         }
     }
 }
@@ -229,13 +275,14 @@ struct weather_settings: View {
                     new_location_search(show_add_location: $show_add_location, weather_data: weather_data).transition(.asymmetric(insertion: .move(edge:.bottom), removal: .move(edge:.bottom))).zIndex(2)
                 }
             }
-        }.onChange(of: selected_segment, perform: {_ in
+        }.onChange(of: selected_segment, perform: { _ in
             let userDefaults = UserDefaults.standard
-            if selected_segment == 0 {
-                userDefaults.setValue("imperial", forKey: "weather_mode")
-            }
-            if selected_segment == 1 {
-                userDefaults.setValue("metric", forKey: "weather_mode")
+            let newMode = (selected_segment == 0) ? "imperial" : "metric"
+
+            userDefaults.setValue(newMode, forKey: "weather_mode")
+
+            for observer in weather_data.array {
+                observer.updateMode(newMode)
             }
         })
     }
@@ -244,7 +291,7 @@ struct weather_settings: View {
 struct new_location_search: View {
     @State var search: String = ""
     @State var is_validating: Bool = false
-    @State var city_list = [WeatherSearch.List]()
+    @State var city_list = [OpenMeteoGeocodingResponse.Result]()
     @State var should_perform_search: Bool = true
     @ObservedObject var keyboard = KeyboardResponder()
     @Binding var show_add_location: Bool
@@ -260,31 +307,40 @@ struct new_location_search: View {
                         ForEach(city_list, id: \.id) { index in
                             Button(action: {
                                 if weather_data.array.count < 9 {
-                                    weather_data.array.append(WeatherObserver(location: "\(index.name ?? ""),\(index.sys?.country ?? "")", mode:  UserDefaults.standard.object(forKey: "weather_mode") as? String ?? "imperial"))
-                                let userDefaults = UserDefaults.standard
-                                var weather_dict = [String:String]()
+                                    let mode = UserDefaults.standard.object(forKey: "weather_mode") as? String ?? "imperial"
+                                    weather_data.array.append(
+                                        WeatherObserver(location: index.displayName, mode: mode)
+                                    )
+
+                                    let userDefaults = UserDefaults.standard
+                                    var weather_dict = [String:String]()
                                     var i = 0
                                     for item in weather_data.array {
                                         weather_dict["\(i)"] = (item.full_location != nil ? item.full_location : "")
                                         i += 1
                                     }
-                                    var defaults_weather = (userDefaults.object(forKey: "weather_cities") as? [String:String] ?? ["0":""]).sorted(by: >)
+                                    let defaults_weather = (userDefaults.object(forKey: "weather_cities") as? [String:String] ?? ["0":""]).sorted(by: >)
                                     if defaults_weather != weather_dict.sorted(by: >) {
-                                    userDefaults.setValue(weather_dict, forKey: "weather_cities")
-                                }
+                                        userDefaults.setValue(weather_dict, forKey: "weather_cities")
+                                    }
                                 }
                                 withAnimation(){show_add_location.toggle()}
                             }) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                HStack(alignment: .center) {
-                                    Spacer().frame(width:1, height: 44-0.95)
-                                    
-                                    Text("\(index.name ?? ""), \(index.sys?.country ?? "")").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.black).lineLimit(1).padding(.trailing, 12)
-                                }.padding([.leading], 8)
-                                Rectangle().fill(Color(red: 224/255, green: 224/255, blue: 224/255)).frame(height:0.95).edgesIgnoringSafeArea(.all)
-                                
+                                VStack(alignment: .leading, spacing: 0) {
+                                    HStack(alignment: .center) {
+                                        Spacer().frame(width:1, height: 44-0.95)
+                                        Text(index.displayName)
+                                            .font(.custom("Helvetica Neue Bold", fixedSize: 20))
+                                            .foregroundColor(.black)
+                                            .lineLimit(1)
+                                            .padding(.trailing, 12)
+                                    }.padding([.leading], 8)
+                                    Rectangle()
+                                        .fill(Color(red: 224/255, green: 224/255, blue: 224/255))
+                                        .frame(height:0.95)
+                                        .edgesIgnoringSafeArea(.all)
+                                }
                             }
-                        }
                         }.frame(height: 44)
                     
                     }.padding(.bottom, keyboard.currentHeight).edgesIgnoringSafeArea(.bottom).compositingGroup()
@@ -313,36 +369,30 @@ struct new_location_search: View {
 
     func parse_search_data(search: String) {
         guard let find_search = search.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-        let developed_string = "https://api.openweathermap.org/data/2.5/find?q=\(find_search)&appid=<YOUR_APP_ID>"
+        let developed_string = "https://geocoding-api.open-meteo.com/v1/search?name=\(find_search)&count=10&language=en&format=json"
         let search_url = URL(string: developed_string)!
         let request = URLRequest(url: search_url)
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-            
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print(error, "failed search")
-                is_validating = false
+                DispatchQueue.main.async { self.is_validating = false }
                 return
             }
-            
-            // Parse JSON data
+
             if let data = data {
                 let decoder = JSONDecoder()
-                
                 do {
-                    let loanDataStore = try decoder.decode(WeatherSearch.self, from: data)
+                    let response = try decoder.decode(OpenMeteoGeocodingResponse.self, from: data)
                     DispatchQueue.main.async {
-                        self.city_list = loanDataStore.list ?? []
-                        is_validating = false
+                        self.city_list = response.results ?? []
+                        self.is_validating = false
                     }
-                    
                 } catch {
-                    is_validating = false
-                  //  self.last_updated_text = "Update failed"
+                    DispatchQueue.main.async { self.is_validating = false }
                     print(error, "failed search")
                 }
             }
-        })
-        
+        }
         task.resume()
     }
     
@@ -523,7 +573,6 @@ struct weather_content_view_day: View {
                     Rectangle().fill(LinearGradient([Color(red: 51/255, green: 66/255, blue: 94/255), Color(red: 52/255, green: 67/255, blue: 95/255),  Color(red: 54/255, green: 70/255, blue: 98/255)], from: .top, to: .bottom)).frame(height: geometry.size.height*200/750)
                     ForEach(0..<6) { i in
                         let t = DateFormatter().weekdaySymbols[wrapping: Calendar.current.component(.weekday, from: Date()) - 1 + Int(i)]
-                        //      let m = weatherData.forcast_data?.list?[optional: Int(i)]?.weather?[0].icon
                         VStack(spacing:0) {
                             if i == 0 {
                                 Rectangle().fill(Color(red: 44/255, green: 56/255, blue: 79/255)).frame(height: 2)
@@ -541,14 +590,17 @@ struct weather_content_view_day: View {
                                 Text("\(t)").font(.custom("Helvetica Neue Bold", fixedSize: 18)).textCase(.uppercase).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
                                 Spacer()
                             }.frame(width:geometry.size.width/2.5).padding(.leading, 8)
-                            
-                            
-                            
-                            Image(json_iconography_to_image(weatherData.forcast_data?.list?[optional: Int(i)]?.weather?[0].icon ?? "", is_mini: true))
-                            
+                            let entry = weatherData.dailyForecast[optional: i]
+
+                            Image(
+                                json_iconography_to_image(
+                                    weatherData.iconCode(for: entry?.weatherCode, isDay: true),
+                                    is_mini: true
+                                )
+                            )
                             Spacer()
-                            Text("\(Int(weatherData.forcast_data?.list?[optional: Int(i)]?.temp?.max ?? Double()) )°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
-                            Text("\(Int(weatherData.forcast_data?.list?[optional: Int(i)]?.temp?.min ?? Double()) )°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(Color(red: 124/255, green: 149/255, blue: 189/255)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5).padding(.trailing, 8)
+                            Text("\(Int(entry?.maxTemp ?? 0))°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
+                            Text("\(Int(entry?.minTemp ?? 0))°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(Color(red: 124/255, green: 149/255, blue: 189/255)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5).padding(.trailing, 8)
                         })
                     }
                     Rectangle().fill(LinearGradient([Color(red: 62/255, green: 78/255, blue: 105/255), Color(red: 62/255, green: 77/255, blue: 106/255)], from: .top, to: .bottom)).frame(height: geometry.size.height*34/750)
@@ -594,7 +646,6 @@ struct weather_content_view_night_2: View {
                     Rectangle().fill(LinearGradient([Color(red: 52/255, green: 34/255, blue: 50/255)], from: .top, to: .bottom)).frame(height: geometry.size.height*200/750)
                     ForEach(0..<6) { i in
                         let t = DateFormatter().weekdaySymbols[wrapping: Calendar.current.component(.weekday, from: Date()) - 1 + Int(i)]
-                        //      let m = weatherData.forcast_data?.list?[optional: Int(i)]?.weather?[0].icon
                         VStack(spacing:0) {
                             if i == 0 {
                                 Rectangle().fill(Color(red: 49/255, green: 32/255, blue: 47/255)).frame(height: 2)
@@ -609,13 +660,18 @@ struct weather_content_view_night_2: View {
                                 Spacer()
                             }.frame(width:geometry.size.width/2.5).padding(.leading, 8)
                             
+                            let entry = weatherData.dailyForecast[optional: i]
                             
-                            
-                            Image(json_iconography_to_image(weatherData.forcast_data?.list?[optional: Int(i)]?.weather?[0].icon ?? "", is_mini: true))
+                            Image(
+                                json_iconography_to_image(
+                                    weatherData.iconCode(for: entry?.weatherCode, isDay: true),
+                                    is_mini: true
+                                )
+                            )
                             
                             Spacer()
-                            Text("\(Int(weatherData.forcast_data?.list?[optional: Int(i)]?.temp?.max ?? Double()) )°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
-                            Text("\(Int(weatherData.forcast_data?.list?[optional: Int(i)]?.temp?.min ?? Double()) )°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(Color(red: 83/255, green: 76/255, blue: 84/255)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5).padding(.trailing, 8)
+                            Text("\(Int(entry?.maxTemp ?? 0))°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
+                            Text("\(Int(entry?.minTemp ?? 0))°").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(Color(red: 83/255, green: 76/255, blue: 84/255)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5).padding(.trailing, 8)
                         })
                     }
                     Rectangle().fill(LinearGradient([Color(red: 52/255, green: 34/255, blue: 50/255)], from: .top, to: .bottom)).frame(height: geometry.size.height*34/750)
@@ -657,11 +713,11 @@ struct weather_header: View {
             HStack() {
                 VStack(alignment:.leading) {
                     Text("\(weatherData.location_string)").font(.custom("Helvetica Neue Bold", fixedSize: 20)).foregroundColor(.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
-                    Text("H: \(Int(weatherData.current_data?.main?.tempMax ?? Double()))° L: \(Int(weatherData.current_data?.main?.tempMin ?? Double()))°").font(.custom("Helvetica Neue Bold", fixedSize: 18)).foregroundColor(Color.white.opacity(0.8)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
+                    Text("H: \(Int(weatherData.currentHigh ?? 0))° L: \(Int(weatherData.currentLow ?? 0))°").font(.custom("Helvetica Neue Bold", fixedSize: 18)).foregroundColor(Color.white.opacity(0.8)).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
                 }.padding(.leading, 8).padding(.top, 40)
                 Spacer()
                 Group {
-                    Text("\(Int(weatherData.current_data?.main?.temp ?? Double()))").font(.custom("Helvetica Neue Regular", fixedSize: 80)).foregroundColor(Color.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
+                    Text("\(Int(weatherData.currentTemp ?? 0))").font(.custom("Helvetica Neue Regular", fixedSize: 80)).foregroundColor(Color.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5)
                     Text("°").font(.custom("Helvetica Neue Regular", fixedSize: 40)).foregroundColor(Color.white).shadow(color: Color.black.opacity(0.9), radius: 0, x: 0, y: 1.5).offset(x: -10, y: -14)
                 }.padding(.leading, 4)
             }
@@ -669,184 +725,244 @@ struct weather_header: View {
     }
 }
 
-//** MARK: Weather Data
-
 class WeatherObserver: ObservableObject, Identifiable, Equatable {
     public static func == (lhs: WeatherObserver, rhs: WeatherObserver) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
-    @Published var forcast_data: WeatherForecast?
-    @Published var current_data: CurrentWeather?
+
     @Published var last_updated_text: String = ""
     @Published var location_string: String = ""
     @Published var full_location: String = ""
+
+    @Published var currentTemp: Double?
+    @Published var currentHigh: Double?
+    @Published var currentLow: Double?
+    @Published var currentWeatherCode: Int?
+    @Published var isDay: Bool = true
+
+    struct DailyForecastEntry {
+        let date: Date
+        let maxTemp: Double
+        let minTemp: Double
+        let weatherCode: Int
+    }
+
+    @Published var dailyForecast: [DailyForecastEntry] = []
+
+    let originalQuery: String
+    @Published var mode: String
+    var latitude: Double?
+    var longitude: Double?
+    var timezone: String?
+
     var id = UUID()
+
     init(location: String, mode: String) {
-        full_location = location
-        location_string = location
+        self.originalQuery = location
+        self.mode = mode
+        self.full_location = location
+
+        self.location_string = location
         if let index = location.range(of: ",")?.lowerBound {
             let substring = location[..<index]
-            location_string = String(substring)
+            self.location_string = String(substring)
         }
-        parse_forcast_data(location: location, mode: mode)
-        parse_current_data(location: location, mode: mode)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "M/d/yy h:mm a"
-        last_updated_text = "Updated \(formatter.string(from: Date()))"
+
+        refresh()
     }
+
     static let long_format: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d/yy h:mm a"
         return formatter
     }()
-    func parse_forcast_data(location: String, mode: String) {
-        guard let location_string = location.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-        let developed_string = "https://api.openweathermap.org/data/2.5/forecast/daily?q=\(location_string),us&appid=<YOUR_APP_ID>&units=\(mode)&cnt=6"
-        let forcast_url = URL(string: developed_string)!
-        let request = URLRequest(url: forcast_url)
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-            
-            if let error = error {
-                print(error, "failed update")
-                self.last_updated_text = "Update failed"
-                return
-            }
-            
-            // Parse JSON data
-            if let data = data {
-                let decoder = JSONDecoder()
-                
-                do {
-                    let loanDataStore = try decoder.decode(WeatherForecast.self, from: data)
-                    DispatchQueue.main.async {
-                        self.forcast_data = loanDataStore
-                    }
-                    
-                } catch {
-                    self.last_updated_text = "Update failed"
-                    print(error, "failed update")
-                }
-            }
-        })
-        
-        task.resume()
-    }
-    
-    func parse_current_data(location: String, mode: String) {
-        guard let location_string = location.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-        //There's a very odd SwiftUI bug where if we properly format the url, it will fail to update our image header. This url will essentially be (location),(country),(country), instead of (location),(country). Why this happens is beyond me.
-        let developed_string = "https://api.openweathermap.org/data/2.5/weather?q=\(location_string),us&appid=<YOUR_APP_ID>&units=\(mode)"
-        let current_url = URL(string: developed_string)!
-        print(current_url)
-        let request = URLRequest(url: current_url)
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-            
-            if let error = error {
-                print("failed update", error)
-                self.last_updated_text = "Update failed"
-                return
-            }
-            print("Here1, ZSK")
-            // Parse JSON data
-            if let data = data {
-                let decoder = JSONDecoder()
-                print("Here2, ZSK")
-                do {
-                    let loanDataStore = try decoder.decode(CurrentWeather.self, from: data)
-                    print(loanDataStore.weather?[0].icon, "ZSK")
-                    DispatchQueue.main.async {
-                        self.objectWillChange.send()
-                        self.current_data = loanDataStore
-                        print(self.current_data?.weather?[0].icon, "ZSK")
-                    }
-                    
-                } catch {
-                    self.last_updated_text = "Update failed"
-                    print("failed update", error)
-                }
-            }
-        })
-        
-        task.resume()
-    }
-    
-}
 
-struct WeatherForecast: Codable {
-    struct City: Codable {
-        struct Coord: Codable {
-            let lon: Double?
-            let lat: Double?
-        }
-        
-        let id: Int?
-        let name: String?
-        let coord: Coord?
-        let country: String?
-        let population: Int?
-        let timezone: Int?
+    func refresh() {
+        geocodeAndLoad(query: originalQuery, mode: mode)
     }
     
-    struct List: Codable {
-        struct Temp: Codable {
-            let day: Double?
-            let min: Double?
-            let max: Double?
-            let night: Double?
-            let eve: Double?
-            let morn: Double?
+    func updateMode(_ newMode: String) {
+        guard newMode != mode else { return }
+
+        mode = newMode
+        refresh()
+    }
+
+    private func geocodeAndLoad(query: String, mode: String) {
+        guard !query.isEmpty,
+              let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "https://geocoding-api.open-meteo.com/v1/search?name=\(encoded)&count=1&language=en&format=json")
+        else {
+            DispatchQueue.main.async {
+                self.last_updated_text = "Invalid location"
+            }
+            return
         }
-        
-        struct FeelsLike: Codable {
-            let day: Double?
-            let night: Double?
-            let eve: Double?
-            let morn: Double?
-        }
-        
-        struct Weather: Codable {
-            let id: Int?
-            let main: String?
-            let description: String?
-            let icon: String?
-        }
-        
-        let dt: Date?
-        let sunrise: Date?
-        let sunset: Date?
-        let temp: Temp?
-        let feelsLike: FeelsLike?
-        let pressure: Int?
-        let humidity: Int?
-        let weather: [Weather]?
-        let speed: Double?
-        let deg: Int?
-        let clouds: Int?
-        let pop: Double?
-        let rain: Double?
-        
-        private enum CodingKeys: String, CodingKey {
-            case dt
-            case sunrise
-            case sunset
-            case temp
-            case feelsLike = "feels_like"
-            case pressure
-            case humidity
-            case weather
-            case speed
-            case deg
-            case clouds
-            case pop
-            case rain
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.last_updated_text = "Geocoding failed"
+                }
+                print("Geocoding error:", error)
+                return
+            }
+
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self.last_updated_text = "Geocoding failed"
+                }
+                return
+            }
+
+            do {
+                let decoded = try JSONDecoder().decode(OpenMeteoGeocodingResponse.self, from: data)
+                guard let result = decoded.results?.first else {
+                    DispatchQueue.main.async {
+                        self.last_updated_text = "Location not found"
+                    }
+                    return
+                }
+
+                self.latitude = result.latitude
+                self.longitude = result.longitude
+                self.timezone = result.timezone
+
+                DispatchQueue.main.async {
+                    self.location_string = result.name
+                     self.full_location = result.displayName
+                }
+
+                self.fetchForecastAndCurrent(mode: mode)
+            } catch {
+                DispatchQueue.main.async {
+                    self.last_updated_text = "Geocoding failed"
+                }
+                print("Failed to decode geocoding:", error)
+            }
+        }.resume()
+    }
+
+    private func fetchForecastAndCurrent(mode: String) {
+        guard let lat = latitude, let lon = longitude else { return }
+
+        var components = URLComponents(string: "https://api.open-meteo.com/v1/forecast")!
+        let isImperial = (mode == "imperial")
+
+        components.queryItems = [
+            URLQueryItem(name: "latitude", value: String(lat)),
+            URLQueryItem(name: "longitude", value: String(lon)),
+            URLQueryItem(name: "current", value: "temperature_2m,weather_code,is_day"),
+            URLQueryItem(name: "daily", value: "weather_code,temperature_2m_max,temperature_2m_min"),
+            URLQueryItem(name: "timezone", value: "auto"),
+            URLQueryItem(name: "forecast_days", value: "6"),
+            URLQueryItem(name: "temperature_unit", value: isImperial ? "fahrenheit" : "celsius")
+        ]
+
+        guard let url = components.url else { return }
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.last_updated_text = "Update failed"
+                }
+                print("Open-Meteo error:", error)
+                return
+            }
+
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self.last_updated_text = "Update failed"
+                }
+                return
+            }
+
+            do {
+                   let decoded = try JSONDecoder().decode(OpenMeteoResponse.self, from: data)
+
+                   DispatchQueue.main.async {
+                       self.objectWillChange.send()
+
+                       self.timezone = decoded.timezone
+
+                       if let current = decoded.current {
+                           self.currentTemp       = current.temperature_2m
+                           self.currentWeatherCode = current.weather_code
+                           self.isDay             = (current.is_day ?? 1) == 1
+                       }
+
+                       if let daily = decoded.daily,
+                          let times = daily.time,
+                          let maxs = daily.temperature_2m_max,
+                          let mins = daily.temperature_2m_min,
+                          let codes = daily.weather_code {
+
+                           let formatter = ISO8601DateFormatter()
+                           formatter.formatOptions = [.withFullDate]
+
+                           var entries: [DailyForecastEntry] = []
+                           let count = min(times.count, maxs.count, mins.count, codes.count, 6)
+
+                           for i in 0..<count {
+                               let date = formatter.date(from: times[i]) ?? Date()
+                               let entry = DailyForecastEntry(
+                                   date: date,
+                                   maxTemp: maxs[i],
+                                   minTemp: mins[i],
+                                   weatherCode: codes[i]
+                               )
+                               entries.append(entry)
+                           }
+
+                           self.dailyForecast = entries
+
+                           if let first = entries.first {
+                               self.currentHigh = first.maxTemp
+                               self.currentLow  = first.minTemp
+                           }
+                       }
+
+                       let now = Date()
+                       self.last_updated_text = "Updated \(Self.long_format.string(from: now))"
+                   }
+               } catch {
+                   DispatchQueue.main.async {
+                       self.last_updated_text = "Update failed"
+                   }
+                   print("Failed to decode Open-Meteo:", error)
+               }
+           }.resume()
+    }
+
+    var currentIconCode: String {
+        iconCode(for: currentWeatherCode, isDay: isDay)
+    }
+
+    func iconCode(for code: Int?, isDay: Bool) -> String {
+        guard let code = code else { return "" }
+        let suffix = isDay ? "d" : "n"
+
+        switch code {
+        case 0:
+            return "01" + suffix
+        case 1, 2:
+            return "02" + suffix
+        case 3:
+            return "03" + suffix
+        case 45, 48:
+            return "50" + suffix
+        case 51, 53, 55, 56, 57,
+             61, 63, 65, 66, 67,
+             80, 81, 82:
+            return "10" + suffix
+        case 71, 73, 75, 77, 85, 86:
+            return "13" + suffix
+        case 95, 96, 99:
+            return "11" + suffix
+        default:
+            return "50" + suffix
         }
     }
-    
-    let city: City?
-  let cod: StringOrDouble?
-let message: StringOrDouble?
-    let cnt: Int?
-    let list: [List]?
 }
 
 struct StringOrDouble: Codable {
@@ -873,148 +989,6 @@ struct StringOrDouble: Codable {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
-}
-
-import Foundation
-
-struct CurrentWeather: Codable {
-    struct Coord: Codable {
-        let lon: Double?
-        let lat: Double?
-    }
-    
-    struct Weather: Codable {
-        let id: Int?
-        let main: String?
-        let description: String?
-        let icon: String?
-    }
-    
-    struct Main: Codable {
-        let temp: Double?
-        let feelsLike: Double?
-        let tempMin: Double?
-        let tempMax: Double?
-        let pressure: Int?
-        let humidity: Int?
-        
-        private enum CodingKeys: String, CodingKey {
-            case temp
-            case feelsLike = "feels_like"
-            case tempMin = "temp_min"
-            case tempMax = "temp_max"
-            case pressure
-            case humidity
-        }
-    }
-    
-    struct Wind: Codable {
-        let speed: Double?
-        let deg: Int?
-    }
-    
-    struct Rain: Codable {
-        let _1h: Double?
-        
-        private enum CodingKeys: String, CodingKey {
-            case _1h = "1h"
-        }
-    }
-    
-    struct Clouds: Codable {
-        let all: Int?
-    }
-    
-    struct Sys: Codable {
-        let type: Int?
-        let id: Int?
-        let country: String?
-        let sunrise: Date?
-        let sunset: Date?
-    }
-    
-    let coord: Coord?
-    let weather: [Weather]?
-    let base: String?
-    let main: Main?
-    let visibility: Int?
-    let wind: Wind?
-    let rain: Rain?
-    let clouds: Clouds?
-    let dt: Date?
-    let sys: Sys?
-    let timezone: Int?
-    let id: Int?
-    let name: String?
-    let cod: StringOrDouble?
-}
-
-struct WeatherSearch: Codable {
-  struct List: Codable {
-    struct Coord: Codable {
-      let lat: Double?
-      let lon: Double?
-    }
-
-    struct Main: Codable {
-      let temp: Double?
-      let feelsLike: Double?
-      let tempMin: Double?
-      let tempMax: Double?
-      let pressure: Int?
-      let humidity: Int?
-      let seaLevel: Int?
-      let grndLevel: Int?
-
-      private enum CodingKeys: String, CodingKey {
-        case temp
-        case feelsLike = "feels_like"
-        case tempMin = "temp_min"
-        case tempMax = "temp_max"
-        case pressure
-        case humidity
-        case seaLevel = "sea_level"
-        case grndLevel = "grnd_level"
-      }
-    }
-
-    struct Wind: Codable {
-      let speed: Double?
-      let deg: Int?
-    }
-
-    struct Sys: Codable {
-      let country: String?
-    }
-
-    struct Clouds: Codable {
-      let all: Int?
-    }
-
-    struct Weather: Codable {
-      let id: Int?
-      let main: String?
-      let description: String?
-      let icon: String?
-    }
-
-    let id: Int?
-    let name: String?
-    let coord: Coord?
-    let main: Main?
-    let dt: Date?
-    let wind: Wind?
-    let sys: Sys?
-   // let rain: Any?
-  //  let snow: Any?
-    let clouds: Clouds?
-    let weather: [Weather]?
-  }
-
-  let message: StringOrDouble?
-  let cod: StringOrDouble?
-  let count: Int?
-  let list: [List]?
 }
 
 func json_iconography_to_image(_ input: String, is_mini: Bool) -> String {
@@ -1083,8 +1057,41 @@ func json_iconography_to_offset(_ input: String) -> CGFloat {
     }
 }
 
-//struct Weather_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Weather()
-//    }
-//}
+struct OpenMeteoGeocodingResponse: Codable {
+    struct Result: Codable, Identifiable {
+        let id: Int
+        let name: String
+        let latitude: Double
+        let longitude: Double
+        let country: String?
+        let timezone: String?
+
+        var displayName: String {
+            if let country, !country.isEmpty { return "\(name), \(country)" }
+            return name
+        }
+    }
+
+    let results: [Result]?
+}
+
+struct OpenMeteoResponse: Codable {
+    struct Current: Codable {
+        let time: String?
+        let temperature_2m: Double?
+        let weather_code: Int?
+        let is_day: Int?
+    }
+
+    struct Daily: Codable {
+        let time: [String]?
+        let temperature_2m_max: [Double]?
+        let temperature_2m_min: [Double]?
+        let weather_code: [Int]?
+    }
+
+    let timezone: String?
+    let current: Current?
+    let daily: Daily?
+}
+
