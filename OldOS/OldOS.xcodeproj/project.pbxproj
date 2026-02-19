@@ -1054,6 +1054,7 @@
 		0D39B3F925AA9EB700B42A84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D39B3F825AA9EB700B42A84 /* Preview Assets.xcassets */; };
 		0D39B3FC25AA9EB700B42A84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D39B3FA25AA9EB700B42A84 /* LaunchScreen.storyboard */; };
 		0D39B40725AA9EB700B42A84 /* OldOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D39B40625AA9EB700B42A84 /* OldOSTests.swift */; };
+		E8F6186F0EFE46818A674308 /* CalculatorEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92381D78FFB04232920F82E4 /* CalculatorEngineTests.swift */; };
 		0D39B41225AA9EB700B42A84 /* OldOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D39B41125AA9EB700B42A84 /* OldOSUITests.swift */; };
 		0D431C372EAD6C62009BCABA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEF67062610F50500341037 /* Alamofire */; };
 		0D4BBF5325B2105000FCFB2E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4BBF5225B2105000FCFB2E /* Settings.swift */; };
@@ -1222,6 +1223,34 @@
 		0D90AAEB2EAD25B1001366C9 /* Compass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90AADF2EAD25B1001366C9 /* Compass.swift */; };
 		0D90AAEC2EAD25B1001366C9 /* Compass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90AADF2EAD25B1001366C9 /* Compass.swift */; };
 		0D90AAED2EAD25B1001366C9 /* Compass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D90AADF2EAD25B1001366C9 /* Compass.swift */; };
+		86E52E4B294B4FE6816E1E88 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		2E06D55FDBD14AEBAC7635E5 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		68039F64C28C43CB859C0B7B /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		2444B8C228A24CB38645363C /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		C97D251DC10A4DF4A561B652 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		5CBEE070FE2342EEA4BE67A5 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		59EF77E1135C4427896348CC /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		995E20188CB941E5B918337D /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		71D29C62AF14494A958BEBA9 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		61E7F8FDE81449E9A117CB06 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		6E80DC707F6B42109B01B9D7 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		D05F99E1EA244579B53F5C13 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		A7606DA83F7442E29C71DF8D /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		C7789DEF051749F5B564FC17 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		C53C9B9A76EB4014B6CCA32B /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		18D05AC594FD4526809D9958 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		745833AD0EE741B4B99AC911 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		1F4E92C0AAB64891AF80DEE8 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		03C19D1FE4564217BEE1EB38 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		9D3D4E271D4F482C99C3B78C /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		1CD8573B295844FC9F0F27D4 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		AE49BB175C4E4B769CFE08B7 /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		CBD54D9B3E094F368657365B /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		D23C158E41B74A9CB16E49AA /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		0CD2EC191DAD428792FACAAA /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		6CCBBD06A7054EA389FC0EED /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
+		E3A08176469F433FA0492263 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44D49AE6134721AFBBE3DC /* Calculator.swift */; };
+		82ACB469DC5540CBA32C402C /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */; };
 		0D9F02E22EAE721100D9AAB4 /* Voice Memos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F02E12EAE721100D9AAB4 /* Voice Memos.swift */; };
 		0D9F02E32EAE721100D9AAB4 /* Voice Memos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F02E12EAE721100D9AAB4 /* Voice Memos.swift */; };
 		0D9F02E42EAE721100D9AAB4 /* Voice Memos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F02E12EAE721100D9AAB4 /* Voice Memos.swift */; };
@@ -1436,6 +1465,7 @@
 		0D39B3FD25AA9EB700B42A84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D39B40225AA9EB700B42A84 /* OldOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OldOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D39B40625AA9EB700B42A84 /* OldOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldOSTests.swift; sourceTree = "<group>"; };
+		92381D78FFB04232920F82E4 /* CalculatorEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorEngineTests.swift; sourceTree = "<group>"; };
 		0D39B40825AA9EB700B42A84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D39B40D25AA9EB700B42A84 /* OldOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OldOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D39B41125AA9EB700B42A84 /* OldOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldOSUITests.swift; sourceTree = "<group>"; };
@@ -1473,6 +1503,8 @@
 		0D818C7F2600500B00824F8E /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		0D8E49592769397A007A4100 /* Camera-SwiftUI-main */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Camera-SwiftUI-main"; sourceTree = "<group>"; };
 		0D90AADF2EAD25B1001366C9 /* Compass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compass.swift; sourceTree = "<group>"; };
+		6C44D49AE6134721AFBBE3DC /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
+		AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorEngine.swift; sourceTree = "<group>"; };
 		0D9F02E12EAE721100D9AAB4 /* Voice Memos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Voice Memos.swift"; sourceTree = "<group>"; };
 		0DA3677F2EAD7C35002DFF8A /* mailcore2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = mailcore2; sourceTree = "<group>"; };
 		0DB3F0A72683D0E200FBFAD8 /* ImageMoveAndScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMoveAndScale.swift; sourceTree = "<group>"; };
@@ -1926,6 +1958,8 @@
 				0D804450265C705200000171 /* Contacts.swift */,
 				0D804455265C78C500000171 /* Messages.swift */,
 				0D90AADF2EAD25B1001366C9 /* Compass.swift */,
+				6C44D49AE6134721AFBBE3DC /* Calculator.swift */,
+				AA84CE63BF364896AD6755AC /* CalculatorEngine.swift */,
 				0D9F02E12EAE721100D9AAB4 /* Voice Memos.swift */,
 				0D8044822662956100000171 /* Photos.swift */,
 				0D80448A26653CE200000171 /* Stocks.swift */,
@@ -1973,6 +2007,7 @@
 			isa = PBXGroup;
 			children = (
 				0D39B40625AA9EB700B42A84 /* OldOSTests.swift */,
+				92381D78FFB04232920F82E4 /* CalculatorEngineTests.swift */,
 				0D39B40825AA9EB700B42A84 /* Info.plist */,
 			);
 			path = OldOSTests;
@@ -3224,6 +3259,8 @@
 				0D18DF5B281C408500C720F9 /* PhoneFormatter.swift in Sources */,
 				0D18DF5C281C408500C720F9 /* Notes.swift in Sources */,
 				0D90AAEC2EAD25B1001366C9 /* Compass.swift in Sources */,
+				0CD2EC191DAD428792FACAAA /* Calculator.swift in Sources */,
+				6CCBBD06A7054EA389FC0EED /* CalculatorEngine.swift in Sources */,
 				0D18DF5D281C408500C720F9 /* Safari.swift in Sources */,
 				0D18DF5E281C408500C720F9 /* GameCenter.swift in Sources */,
 				0D18DF5F281C408500C720F9 /* HomeScreen.swift in Sources */,
@@ -3280,6 +3317,8 @@
 				0D249DD5272270C300C69F8D /* PhoneFormatter.swift in Sources */,
 				0D249DD6272270C300C69F8D /* Notes.swift in Sources */,
 				0D90AAE12EAD25B1001366C9 /* Compass.swift in Sources */,
+				68039F64C28C43CB859C0B7B /* Calculator.swift in Sources */,
+				2444B8C228A24CB38645363C /* CalculatorEngine.swift in Sources */,
 				0D249DD7272270C300C69F8D /* Safari.swift in Sources */,
 				0D249DD8272270C300C69F8D /* GameCenter.swift in Sources */,
 				0D249DD9272270C300C69F8D /* HomeScreen.swift in Sources */,
@@ -3336,6 +3375,8 @@
 				0D249E4B2722715B00C69F8D /* PhoneFormatter.swift in Sources */,
 				0D249E4C2722715B00C69F8D /* Notes.swift in Sources */,
 				0D90AAE22EAD25B1001366C9 /* Compass.swift in Sources */,
+				C97D251DC10A4DF4A561B652 /* Calculator.swift in Sources */,
+				5CBEE070FE2342EEA4BE67A5 /* CalculatorEngine.swift in Sources */,
 				0D249E4D2722715B00C69F8D /* Safari.swift in Sources */,
 				0D249E4E2722715B00C69F8D /* GameCenter.swift in Sources */,
 				0D249E4F2722715B00C69F8D /* HomeScreen.swift in Sources */,
@@ -3392,6 +3433,8 @@
 				0D249EC12722715C00C69F8D /* PhoneFormatter.swift in Sources */,
 				0D249EC22722715C00C69F8D /* Notes.swift in Sources */,
 				0D90AAE32EAD25B1001366C9 /* Compass.swift in Sources */,
+				59EF77E1135C4427896348CC /* Calculator.swift in Sources */,
+				995E20188CB941E5B918337D /* CalculatorEngine.swift in Sources */,
 				0D249EC32722715C00C69F8D /* Safari.swift in Sources */,
 				0D249EC42722715C00C69F8D /* GameCenter.swift in Sources */,
 				0D249EC52722715C00C69F8D /* HomeScreen.swift in Sources */,
@@ -3448,6 +3491,8 @@
 				0D249F372722715D00C69F8D /* PhoneFormatter.swift in Sources */,
 				0D249F382722715D00C69F8D /* Notes.swift in Sources */,
 				0D90AAE42EAD25B1001366C9 /* Compass.swift in Sources */,
+				71D29C62AF14494A958BEBA9 /* Calculator.swift in Sources */,
+				61E7F8FDE81449E9A117CB06 /* CalculatorEngine.swift in Sources */,
 				0D249F392722715D00C69F8D /* Safari.swift in Sources */,
 				0D249F3A2722715D00C69F8D /* GameCenter.swift in Sources */,
 				0D249F3B2722715D00C69F8D /* HomeScreen.swift in Sources */,
@@ -3504,6 +3549,8 @@
 				0D249FAD2722715E00C69F8D /* PhoneFormatter.swift in Sources */,
 				0D249FAE2722715E00C69F8D /* Notes.swift in Sources */,
 				0D90AAE52EAD25B1001366C9 /* Compass.swift in Sources */,
+				6E80DC707F6B42109B01B9D7 /* Calculator.swift in Sources */,
+				D05F99E1EA244579B53F5C13 /* CalculatorEngine.swift in Sources */,
 				0D249FAF2722715E00C69F8D /* Safari.swift in Sources */,
 				0D249FB02722715E00C69F8D /* GameCenter.swift in Sources */,
 				0D249FB12722715E00C69F8D /* HomeScreen.swift in Sources */,
@@ -3560,6 +3607,8 @@
 				0D24A0232722716000C69F8D /* PhoneFormatter.swift in Sources */,
 				0D24A0242722716000C69F8D /* Notes.swift in Sources */,
 				0D90AAE62EAD25B1001366C9 /* Compass.swift in Sources */,
+				A7606DA83F7442E29C71DF8D /* Calculator.swift in Sources */,
+				C7789DEF051749F5B564FC17 /* CalculatorEngine.swift in Sources */,
 				0D24A0252722716000C69F8D /* Safari.swift in Sources */,
 				0D24A0262722716000C69F8D /* GameCenter.swift in Sources */,
 				0D24A0272722716000C69F8D /* HomeScreen.swift in Sources */,
@@ -3616,6 +3665,8 @@
 				0D24A0992722716500C69F8D /* PhoneFormatter.swift in Sources */,
 				0D24A09A2722716500C69F8D /* Notes.swift in Sources */,
 				0D90AAE72EAD25B1001366C9 /* Compass.swift in Sources */,
+				C53C9B9A76EB4014B6CCA32B /* Calculator.swift in Sources */,
+				18D05AC594FD4526809D9958 /* CalculatorEngine.swift in Sources */,
 				0D24A09B2722716500C69F8D /* Safari.swift in Sources */,
 				0D24A09C2722716500C69F8D /* GameCenter.swift in Sources */,
 				0D24A09D2722716500C69F8D /* HomeScreen.swift in Sources */,
@@ -3672,6 +3723,8 @@
 				0D24A10F2722716600C69F8D /* PhoneFormatter.swift in Sources */,
 				0D24A1102722716600C69F8D /* Notes.swift in Sources */,
 				0D90AAE82EAD25B1001366C9 /* Compass.swift in Sources */,
+				745833AD0EE741B4B99AC911 /* Calculator.swift in Sources */,
+				1F4E92C0AAB64891AF80DEE8 /* CalculatorEngine.swift in Sources */,
 				0D24A1112722716600C69F8D /* Safari.swift in Sources */,
 				0D24A1122722716600C69F8D /* GameCenter.swift in Sources */,
 				0D24A1132722716600C69F8D /* HomeScreen.swift in Sources */,
@@ -3728,6 +3781,8 @@
 				0D24A1852722719000C69F8D /* PhoneFormatter.swift in Sources */,
 				0D24A1862722719000C69F8D /* Notes.swift in Sources */,
 				0D90AAE92EAD25B1001366C9 /* Compass.swift in Sources */,
+				03C19D1FE4564217BEE1EB38 /* Calculator.swift in Sources */,
+				9D3D4E271D4F482C99C3B78C /* CalculatorEngine.swift in Sources */,
 				0D24A1872722719000C69F8D /* Safari.swift in Sources */,
 				0D24A1882722719000C69F8D /* GameCenter.swift in Sources */,
 				0D24A1892722719000C69F8D /* HomeScreen.swift in Sources */,
@@ -3784,6 +3839,8 @@
 				0D24A1FB2722719400C69F8D /* PhoneFormatter.swift in Sources */,
 				0D24A1FC2722719400C69F8D /* Notes.swift in Sources */,
 				0D90AAEA2EAD25B1001366C9 /* Compass.swift in Sources */,
+				1CD8573B295844FC9F0F27D4 /* Calculator.swift in Sources */,
+				AE49BB175C4E4B769CFE08B7 /* CalculatorEngine.swift in Sources */,
 				0D24A1FD2722719400C69F8D /* Safari.swift in Sources */,
 				0D24A1FE2722719400C69F8D /* GameCenter.swift in Sources */,
 				0D24A1FF2722719400C69F8D /* HomeScreen.swift in Sources */,
@@ -3840,6 +3897,8 @@
 				0D11D89825EDD2BC00AB2F2B /* PhoneFormatter.swift in Sources */,
 				0DEF6715261279A200341037 /* Notes.swift in Sources */,
 				0D90AAE02EAD25B1001366C9 /* Compass.swift in Sources */,
+				86E52E4B294B4FE6816E1E88 /* Calculator.swift in Sources */,
+				2E06D55FDBD14AEBAC7635E5 /* CalculatorEngine.swift in Sources */,
 				0D11D84E25E19F9400AB2F2B /* Safari.swift in Sources */,
 				0D818C2125F67DD900824F8E /* GameCenter.swift in Sources */,
 				0D39B3F425AA9EB600B42A84 /* HomeScreen.swift in Sources */,
@@ -3858,6 +3917,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D39B40725AA9EB700B42A84 /* OldOSTests.swift in Sources */,
+				E8F6186F0EFE46818A674308 /* CalculatorEngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3912,6 +3972,8 @@
 				0D6715E12864BCD0002CCC47 /* PhoneFormatter.swift in Sources */,
 				0D6715E22864BCD0002CCC47 /* Notes.swift in Sources */,
 				0D90AAED2EAD25B1001366C9 /* Compass.swift in Sources */,
+				E3A08176469F433FA0492263 /* Calculator.swift in Sources */,
+				82ACB469DC5540CBA32C402C /* CalculatorEngine.swift in Sources */,
 				0D6715E32864BCD0002CCC47 /* Safari.swift in Sources */,
 				0D6715E42864BCD0002CCC47 /* GameCenter.swift in Sources */,
 				0D6715E52864BCD0002CCC47 /* HomeScreen.swift in Sources */,
@@ -3968,6 +4030,8 @@
 				0DBD28F8274C70F8003120D9 /* PhoneFormatter.swift in Sources */,
 				0DBD28F9274C70F8003120D9 /* Notes.swift in Sources */,
 				0D90AAEB2EAD25B1001366C9 /* Compass.swift in Sources */,
+				CBD54D9B3E094F368657365B /* Calculator.swift in Sources */,
+				D23C158E41B74A9CB16E49AA /* CalculatorEngine.swift in Sources */,
 				0DBD28FA274C70F8003120D9 /* Safari.swift in Sources */,
 				0DBD28FB274C70F8003120D9 /* GameCenter.swift in Sources */,
 				0DBD28FC274C70F8003120D9 /* HomeScreen.swift in Sources */,

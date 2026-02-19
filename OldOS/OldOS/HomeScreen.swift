@@ -136,6 +136,9 @@ struct Controller: View {
                             case "Voice Memos":
                                 multitasking_controller(current_view: $current_view, apps_scale: $apps_scale, dock_offset: $dock_offset, multitasking_apps: $multitasking_apps, instant_multitasking_change: $instant_multitasking_change, current_multitasking_app: $current_multitasking_app, should_update: $should_update, show_remove: $show_remove, show_multitasking: $show_multitasking, relative_app: "Voice Memos")
                                 VoiceMemos().padding([.leading, .trailing]).transition(.scale).modifiedForMultitasking2(show_multitasking, instant_multitasking_change, current_multitasking_app == "Voice Memos")
+                            case "Calculator":
+                                multitasking_controller(current_view: $current_view, apps_scale: $apps_scale, dock_offset: $dock_offset, multitasking_apps: $multitasking_apps, instant_multitasking_change: $instant_multitasking_change, current_multitasking_app: $current_multitasking_app, should_update: $should_update, show_remove: $show_remove, show_multitasking: $show_multitasking, relative_app: "Calculator")
+                                Calculator().padding([.leading, .trailing]).transition(.scale).modifiedForMultitasking2(show_multitasking, instant_multitasking_change, current_multitasking_app == "Calculator")
                             default:
                                 LockScreen(current_view: $current_view, apps_scale: $apps_scale, dock_offset: $dock_offset, apps_scale_height: $apps_scale_height).padding([.leading, .trailing])
                             }
@@ -852,7 +855,7 @@ struct app_search_id_ext: Identifiable {
     var name: String
 }
 struct search: View {
-    var apps = [app_search_id_ext(name:"Messages"), app_search_id_ext(name:"Calendar"), app_search_id_ext(name:"Photos"), app_search_id_ext(name:"Camera"), app_search_id_ext(name:"YouTube"), app_search_id_ext(name:"Stocks"), app_search_id_ext(name:"Maps"), app_search_id_ext(name:"Weather"), app_search_id_ext(name:"Notes"), app_search_id_ext(name:"iTunes"), app_search_id_ext(name:"App Store"),  app_search_id_ext(name:"Game Center"), app_search_id_ext(name:"Settings"), app_search_id_ext(name:"Phone"), app_search_id_ext(name:"Mail"), app_search_id_ext(name:"Safari" ), app_search_id_ext(name:"iPod" ), app_search_id_ext(name:"Contacts")]
+    var apps = [app_search_id_ext(name:"Messages"), app_search_id_ext(name:"Calendar"), app_search_id_ext(name:"Photos"), app_search_id_ext(name:"Camera"), app_search_id_ext(name:"YouTube"), app_search_id_ext(name:"Stocks"), app_search_id_ext(name:"Maps"), app_search_id_ext(name:"Weather"), app_search_id_ext(name:"Notes"), app_search_id_ext(name:"iTunes"), app_search_id_ext(name:"App Store"),  app_search_id_ext(name:"Game Center"), app_search_id_ext(name:"Settings"), app_search_id_ext(name:"Phone"), app_search_id_ext(name:"Mail"), app_search_id_ext(name:"Safari" ), app_search_id_ext(name:"iPod" ), app_search_id_ext(name:"Contacts"), app_search_id_ext(name:"Calculator")]
     @Binding var width: CGFloat
     @Binding var height: CGFloat
     @State var search = ""
@@ -1395,7 +1398,7 @@ struct app: View {
     
     var body: some View {
         Button(action: {
-            if !["Clock", "Calculator"].contains(app_name) {
+            if !["Clock"].contains(app_name) {
                 if !is_folder_app {
                     withAnimation(.linear(duration: 0.32)) {
                         apps_scale = 4
